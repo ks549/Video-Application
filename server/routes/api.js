@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const video = require('../model/videos');
+const videos = require('../model/videos');
 
 const db = "mongodb://admin:admin@ds151141.mlab.com:51141/video_player";
 mongoose.Promise = global.Promise;
@@ -16,14 +16,14 @@ mongoose.connect(db,function(err){
 	}
 });
 
-router.get('/videos/:id',function(req, resp){
-	video.findById(req.params.id)
-		.exec(function(err,video){
+router.get('/videos',function(req, resp){
+	videos.find({})
+		.exec(function(err,videos){
 			if(err){
 				console.log("error loading videos");
 			}
 			else{
-				resp.json(video);
+				resp.json(videos);
 			}
 		})
 });
